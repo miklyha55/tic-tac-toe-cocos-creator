@@ -1,4 +1,4 @@
-import { _decorator, Component, view } from 'cc';
+import { _decorator, Component, view, warn } from 'cc';
 import GameEvent from '../../Enum/GameEvent';
 import GameObjectType from '../GameObjectManager/GameObjectType';
 import GameObject from '../GameObjectManager/GameObject';
@@ -24,19 +24,19 @@ export class LevelManager extends Component {
         this.onChangeLevel(this.currentLevel);
     }
 
-    _handleSubscription(active: boolean) {
+    private _handleSubscription(active: boolean) {
         const func: string = active ? "on" : "off";
 
         view[func](GameEvent.CHANGE_LEVEL, this.onChangeLevel, this);
     }
 
-    onChangeLevel(levelType: number) {
+    private onChangeLevel(levelType: number) {
         if (this._currentLevelInfo) {
             view.emit(GameEvent.REMOVE_GAME_OBJECT, this._currentLevelInfo.type);
 
             if(this._gameObjectArray.length) {
                 this._gameObjectArray.forEach(element => {
-                    view.emit(GameEvent.REMOVE_GAME_OBJECT, element.type);
+                    view.emit(GameEvent.REMOVE_GAME_OBJECT, element);
                 });
             }
         }
@@ -46,11 +46,14 @@ export class LevelManager extends Component {
 
             const levelObject: Level = gameObject.node.getComponent(Level);
 
-            if(levelObject) {
-                levelObject.createWorld((gameObjectArray) => {
-                    this._gameObjectArray = gameObjectArray;
-                });
+            if(!levelObject) {
+                warn("Add Level class");
+                return;
             }
+
+            levelObject.createWorld((gameObjectArray) => {
+                this._gameObjectArray = gameObjectArray;
+            });
         });
     }
 }

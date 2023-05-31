@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 @ccclass("LevelHelper")
 class LevelHelper {
     @property({ type: GameObjectType }) type: number = GameObjectType.None;
-    @property({ type: CCBoolean }) isUi: boolean = false;
+    @property({}) isUi: boolean = false;
 }
 
 @ccclass('Level')

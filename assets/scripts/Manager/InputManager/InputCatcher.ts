@@ -18,7 +18,7 @@ export class InputCatcher extends Component {
         this._handleEvents(false);
     }
 
-    _handleEvents(active: boolean) {
+    private _handleEvents(active: boolean) {
         const func: string = active ? "on" : "off";
 
         this.node[func](Node.EventType.TOUCH_START, this.onDown, this);
@@ -27,15 +27,15 @@ export class InputCatcher extends Component {
         this.node[func](Node.EventType.TOUCH_CANCEL, this.onUp, this);
     }
 
-    onDown(event: EventTouch) {
+    private onDown(event: EventTouch) {
         view.emit(GameEvent.INPUT, InputType.Down, this.direction, event.touch, this, this.target);
     }
 
-    onMove(event: EventTouch) {
+    private onMove(event: EventTouch) {
         view.emit(GameEvent.INPUT, InputType.Move, this.direction, event.touch, this, this.target);
     }
 
-    onUp(event: EventTouch) {
+    private onUp(event: EventTouch) {
         view.emit(GameEvent.INPUT, InputType.Up, this.direction, event.touch, this, this.target);
     }
 }

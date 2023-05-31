@@ -9,7 +9,7 @@ export class GameObjectFactory {
             const gameObject: GameObject = node.getComponent(GameObject);
 
             if(!gameObject) {
-                warn("Add GameObjectComponent");
+                warn("Add GameObject class");
                 return;
             }
 

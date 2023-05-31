@@ -21,13 +21,13 @@ export class RenderManager extends Component {
         this._setRenderType();
     }
 
-    _handleSubscription(active: boolean) {
+    private _handleSubscription(active: boolean) {
         const func: string = active ? "on" : "off";
         
         view[func](this.event, this.onGetGameObjectParent, this);
     }
 
-    _setRenderType() {
+    private _setRenderType() {
         for (let i in RenderType) {
             const key = RenderType[i];
             if (key !== RenderType.None) {
@@ -39,7 +39,7 @@ export class RenderManager extends Component {
         }
     }
 
-    _getParent(key: number) {
+    private _getParent(key: number) {
         let parent: Node = this._orders.get(key);
 
         if (!(parent instanceof Node)) {
@@ -49,7 +49,7 @@ export class RenderManager extends Component {
         return parent;
     }
 
-    onGetGameObjectParent(key: number, callback: (parent: Node) => void) {
+    private onGetGameObjectParent(key: number, callback: (parent: Node) => void) {
         callback instanceof Function && callback(this._getParent(key));
     }
 }

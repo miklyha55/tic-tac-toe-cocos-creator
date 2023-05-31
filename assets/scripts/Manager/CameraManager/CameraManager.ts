@@ -22,7 +22,7 @@ export class CameraManager extends Component {
         this._addClip();
     }
 
-    _addClip() {
+    private _addClip() {
         this._animation = this.camera.getComponent(Animation) || this.camera.addComponent(Animation);
 
         if (!this.shakeAnimationClip) {
@@ -32,13 +32,13 @@ export class CameraManager extends Component {
         this._animation.createState(this.shakeAnimationClip, this.shakeAnimationClip.name);
     }
 
-    _handleSubscription(active: boolean) {
+    private _handleSubscription(active: boolean) {
         const func: string = active ? "on" : "off";
 
         view[func](GameEvent.SHAKE_CAMERA, this.onShakeCamera, this);
     }
 
-    onShakeCamera() {
+    private onShakeCamera() {
         if (!this.camera) {
             return;
         }

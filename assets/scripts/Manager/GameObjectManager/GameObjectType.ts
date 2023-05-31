@@ -9,6 +9,9 @@ const GameObjectType = Enum({
     ButtonRand: 5,
     ButtonCheck: 6,
     Bg: 7,
+    Grid: 8,
+    Cell: 9,
+    Text: 10,
 });
 
 export default GameObjectType;

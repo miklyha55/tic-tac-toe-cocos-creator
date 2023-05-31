@@ -51,13 +51,13 @@ export class ResizeComponent extends Component {
         this.onSizeChange();
     }
 
-    _handleSubscription(active: boolean) {
+    private _handleSubscription(active: boolean) {
         const func: string = active ? "on" : "off";
 
         view[func]("canvas-resize", this.onSizeChange, this);
     }
 
-    _getRelativePosition(relativePosition) {
+    private _getRelativePosition(relativePosition) {
         const visible_size: math.Size = view.getVisibleSize();
         const x: number =
             visible_size.width * relativePosition.x - visible_size.width / 2;
@@ -67,7 +67,7 @@ export class ResizeComponent extends Component {
         return v2(x, y);
     }
 
-    onSizeChange() {
+    private onSizeChange() {
         const visible_size: math.Size = view.getVisibleSize();
         const isLandscape: boolean = visible_size.width > visible_size.height;
         const resizeHelper: ResizeHelper = isLandscape ? this.landscape : this.portrait;

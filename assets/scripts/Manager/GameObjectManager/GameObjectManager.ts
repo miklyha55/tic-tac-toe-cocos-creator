@@ -22,7 +22,7 @@ export class GameObjectManager extends Component {
     @property({ type: GameObjectHelper }) data: Array<IROGameObjectHelper> = [];
 
     private _data: Map<number, Prefab> = new Map();
-    private _poolObjectArray: Map<number, GameObject> = new Map();
+    private _poolObjectArray: Array<GameObject> = [];
 
     onEnable() {
         this._handleSubscription(true);
@@ -40,7 +40,7 @@ export class GameObjectManager extends Component {
         }
     }
 
-    _handleSubscription(active: boolean) {
+    private _handleSubscription(active: boolean) {
         const func: string = active ? "on" : "off";
 
         view[func](GameEvent.CREATE_GAME_OBJECT, this.onCreateGameObject, this);
@@ -48,8 +48,14 @@ export class GameObjectManager extends Component {
         view[func](GameEvent.REMOVE_GAME_OBJECT, this.onRemoveGameObject, this);
     }
 
-    onRemoveGameObject(type: number) {
-        const poolObject: GameObject = this._poolObjectArray.get(type);
+    private _checkedPoolObject(type: number) {
+        return this._poolObjectArray.find((element) => 
+            element.type === type && !element.active);
+    }
+
+    private onRemoveGameObject(gameObject: GameObject) {
+        const poolObject: GameObject = this._poolObjectArray.find((element) => 
+            element === gameObject);
 
         if (!poolObject) {
             return;
@@ -59,13 +65,14 @@ export class GameObjectManager extends Component {
         poolObject.node.active = false;
     }
     
-    onGetGameObject(type: number, callback: (gameObject: GameObject) => void) {
-        callback instanceof Function && callback(this._poolObjectArray.get(type));
+    private onGetGameObject(type: number, callback: (gameObject: Array<GameObject>) => void) {
+        callback instanceof Function && callback(this._poolObjectArray.filter((element) => 
+            element.type === type));
     }
 
-    onCreateGameObject(type: number, callback: (poolObject: GameObject) => void, isUi: boolean = false) {
+    private onCreateGameObject(type: number, callback: (poolObject: GameObject) => void, isUi: boolean = false) {
         const prefab: Prefab = this._data.get(type);
-        const checkedPoolObject: GameObject = this._poolObjectArray.get(type);
+        const checkedPoolObject: GameObject = this._checkedPoolObject(type);
 
         let poolObject: GameObject = null;
 
@@ -86,11 +93,9 @@ export class GameObjectManager extends Component {
                 gameObject.type = type;
                 poolObject = gameObject;
 
-                this._poolObjectArray.set(type, gameObject);
+                this._poolObjectArray.push(gameObject);
             });
         }
-
-        console.log(this._poolObjectArray);
 
         callback instanceof Function && callback(poolObject);
     }

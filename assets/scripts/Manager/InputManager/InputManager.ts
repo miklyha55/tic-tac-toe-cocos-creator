@@ -20,11 +20,11 @@ export class InputManager extends Component {
         view.on(GameEvent.INPUT, this.onInput, this);
 
         this.commands[InputDirection.ButtonStart] = new ButtonStartCommand();
-        this.commands[InputDirection.ButtonRand] = new ButtonCheckCommand();
-        this.commands[InputDirection.ButtonCheck] = new ButtonRandCommand();
+        this.commands[InputDirection.ButtonRand] = new ButtonRandCommand();
+        this.commands[InputDirection.ButtonCheck] = new ButtonCheckCommand();
     }
 
-    onInput(
+    private onInput(
         type: number,
         direction: number,
         touch: Touch,
