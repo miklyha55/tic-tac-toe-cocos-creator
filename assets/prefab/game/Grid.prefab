@@ -199,8 +199,8 @@
     "isScale": true,
     "scale": {
       "__type__": "cc.Vec2",
-      "x": 1,
-      "y": 1
+      "x": 0.9,
+      "y": 0.9
     }
   },
   {
