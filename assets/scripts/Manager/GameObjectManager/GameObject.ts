@@ -1,4 +1,4 @@
-import RenderType from "../../Render/RenderType";
+import RenderType from "../RenderManager/RenderType";
 
 import { _decorator, Component } from "cc";
 const { ccclass, property } = _decorator;

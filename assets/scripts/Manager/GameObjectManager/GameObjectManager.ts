@@ -2,7 +2,8 @@ import GameObjectType from "./GameObjectType";
 import GameEvent from "../../Enum/GameEvent";
 import GameObject from "./GameObject";
 
-import { _decorator, Component, Node, Prefab, view, instantiate } from "cc";
+import { _decorator, Component, Node, Prefab, view } from "cc";
+import { GameObjectFactory } from "./Factory";
 const { ccclass, property } = _decorator;
 
 interface IROGameObjectHelper {
@@ -47,10 +48,7 @@ export class GameObjectManager extends Component {
     onCreateGameObject(type: number, callback: (node: Node, gameObject: GameObject) => void) {
         const prefab: Prefab = this._data[type];
 
-        if (prefab) {
-            const node: Node = instantiate(prefab);
-            const gameObject: GameObject = node.getComponent(GameObject);
-
+        GameObjectFactory.CreateGameObject(prefab, (node, gameObject) => {
             if (gameObject) {
                 view.emit(GameEvent.GET_GAME_OBJECT_PARENT, gameObject.renderType, (parent) => {
                     node.parent = parent;
@@ -59,8 +57,6 @@ export class GameObjectManager extends Component {
                 gameObject.activate = false;
                 gameObject.type = type;
             }
-
-            callback instanceof Function && callback(node, gameObject);
-        }
+        });
     }
 }

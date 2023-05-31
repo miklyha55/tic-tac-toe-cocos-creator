@@ -1,11 +1,11 @@
 import RenderType from "./RenderType";
-import GameEvent from "../Enum/GameEvent";
+import GameEvent from "../../Enum/GameEvent";
 
 import { _decorator, Component, view, Node } from "cc";
 const { ccclass } = _decorator;
 
-@ccclass("RenderList")
-export class RenderList extends Component {
+@ccclass("RenderManager")
+export class RenderManager extends Component {
     private _orders: Array<Node> = [];
 
     onEnable() {
