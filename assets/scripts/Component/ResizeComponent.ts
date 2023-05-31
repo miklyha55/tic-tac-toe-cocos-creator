@@ -63,6 +63,7 @@ export class ResizeComponent extends Component {
             visible_size.width * relativePosition.x - visible_size.width / 2;
         const y: number =
             visible_size.height / 2 - visible_size.height * relativePosition.y;
+
         return v2(x, y);
     }
 

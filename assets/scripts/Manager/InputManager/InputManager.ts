@@ -1,6 +1,10 @@
 import GameEvent from "../../Enum/GameEvent";
+import ButtonCheckCommand from "./Commands/ButtonCheckCommand";
+import ButtonRandCommand from "./Commands/ButtonRandCommand";
+import ButtonStartCommand from "./Commands/ButtonStartCommand";
 import InputCommand from "./Commands/InputCommand";
 import { InputCatcher } from "./InputCatcher";
+import InputDirection from "./InputDirection";
 import InputType from "./InputType";
 
 import { _decorator, Component, view, Touch } from "cc";
@@ -14,6 +18,10 @@ export class InputManager extends Component {
 
     onLoad() {
         view.on(GameEvent.INPUT, this.onInput, this);
+
+        this.commands[InputDirection.ButtonStart] = new ButtonStartCommand();
+        this.commands[InputDirection.ButtonRand] = new ButtonCheckCommand();
+        this.commands[InputDirection.ButtonCheck] = new ButtonRandCommand();
     }
 
     onInput(

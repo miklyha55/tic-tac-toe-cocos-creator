@@ -16,10 +16,15 @@ const GameEvent = Enum({
     UP: 10,
 
     GET_GAME_OBJECT_PARENT: 11,
+    GET_UI_OBJECT_PARENT: 18,
+    
     DROP_END: 12,
     UPDATE_GRIG_DATA: 13,
 
     SHAKE_CAMERA: 14,
+    CHANGE_LEVEL: 15,
+    GET_GAME_OBJECT: 16,
+    REMOVE_GAME_OBJECT: 17,
 });
 
 export default GameEvent;

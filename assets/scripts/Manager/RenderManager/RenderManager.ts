@@ -2,11 +2,12 @@ import RenderType from "./RenderType";
 import GameEvent from "../../Enum/GameEvent";
 
 import { _decorator, Component, view, Node } from "cc";
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass("RenderManager")
 export class RenderManager extends Component {
-    private _orders: Array<Node> = [];
+    @property({ type: GameEvent }) event: number = GameEvent.NONE;
+    private _orders: Map<number, Node> = new Map();
 
     onEnable() {
         this._handleSubscription(true);
@@ -22,8 +23,8 @@ export class RenderManager extends Component {
 
     _handleSubscription(active: boolean) {
         const func: string = active ? "on" : "off";
-
-        view[func](GameEvent.GET_GAME_OBJECT_PARENT, this.onGetGameObjectParent, this);
+        
+        view[func](this.event, this.onGetGameObjectParent, this);
     }
 
     _setRenderType() {
@@ -33,22 +34,22 @@ export class RenderManager extends Component {
                 const parent: Node = new Node(i + "Parent");
 
                 parent.parent = this.node;
-                this._orders[key] = parent;
+                this._orders.set(key, parent);
             }
         }
     }
 
     _getParent(key: number) {
-        let parent: Node = this._orders[key];
+        let parent: Node = this._orders.get(key);
 
         if (!(parent instanceof Node)) {
-            parent = this._orders[RenderType.Default];
+            parent = this._orders.get(RenderType.Default);
         }
 
         return parent;
     }
 
-    onGetGameObjectParent(key: number, callback: (arg: Node) => void) {
+    onGetGameObjectParent(key: number, callback: (parent: Node) => void) {
         callback instanceof Function && callback(this._getParent(key));
     }
 }

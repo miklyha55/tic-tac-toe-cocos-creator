@@ -7,6 +7,6 @@ const { ccclass, property } = _decorator;
 export default class GameObject extends Component {
     @property({ type: RenderType }) renderType: number = RenderType.Default;
 
-    public activate: boolean = false;
+    public active: boolean = false;
     public type: number = 0;
 }
