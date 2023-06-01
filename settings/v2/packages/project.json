@@ -10,5 +10,28 @@
     "legacyFbxImporter": {
       "visible": true
     }
+  },
+  "layer": [],
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "BORDER"
+      },
+      {
+        "index": 2,
+        "name": "ENEMY"
+      },
+      {
+        "index": 3,
+        "name": "WIZARD"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 12,
+      "2": 10,
+      "3": 6
+    }
   }
 }
